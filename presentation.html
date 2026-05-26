@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azure Hub-Spoke Deployment Presentation</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5d6b82;
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --blue: #2563eb;
+      --green: #059669;
+      --orange: #ea580c;
+      --red: #dc2626;
+      --line: #d8e0eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+    }
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 48px 64px;
+      background: var(--panel);
+    }
+    .slide.active { display: grid; grid-template-rows: auto 1fr auto; gap: 24px; }
+    .title {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.08; letter-spacing: 0; }
+    h1 { font-size: 54px; max-width: 860px; }
+    h2 { font-size: 38px; }
+    h3 { font-size: 22px; color: var(--blue); }
+    p { margin: 0; color: var(--muted); font-size: 21px; line-height: 1.45; }
+    ul { margin: 0; padding-left: 24px; color: var(--ink); font-size: 21px; line-height: 1.45; }
+    li { margin: 8px 0; }
+    .eyebrow { color: var(--blue); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; }
+    .slide-no { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: #fbfdff;
+    }
+    .card strong { display: block; font-size: 22px; margin-bottom: 8px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: #1d4ed8;
+      font-weight: 700;
+      font-size: 15px;
+      margin: 4px 6px 4px 0;
+    }
+    .hero {
+      background: linear-gradient(135deg, #eff6ff 0%, #ffffff 52%, #ecfdf5 100%);
+    }
+    .big-list li { font-size: 24px; margin: 13px 0; }
+    .image-frame {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+    .image-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .flow {
+      width: 100%;
+      height: 100%;
+      min-height: 410px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+    .diagram-img {
+      width: 100%;
+      height: 100%;
+      min-height: 410px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+      object-fit: contain;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+    .code {
+      font-family: Consolas, monospace;
+      font-size: 18px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 3px 7px;
+    }
+    @media print {
+      body, .deck { width: 100%; height: auto; overflow: visible; background: white; }
+      .slide, .slide.active { display: grid; page-break-after: always; width: 13.333in; height: 7.5in; }
+      .controls { display: none; }
+    }
+    .controls {
+      position: fixed;
+      right: 16px;
+      bottom: 14px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    button {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide hero active">
+      <div class="title">
+        <div>
+          <div class="eyebrow">Azure DevOps + Terraform + Hub-Spoke</div>
+          <h1>Deploying Two Three-Tier Applications on Azure</h1>
+        </div>
+        <div class="slide-no">1 / 10</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <p style="font-size:28px; color:#172033; max-width:720px;">
+            A presentation architecture showing secure ingress, regional spokes, private data access, VMSS scaling, and site-to-site VPN integration with on-prem.
+          </p>
+          <div style="margin-top:28px;">
+            <span class="pill">opslora.com</span>
+            <span class="pill">pronunt.com</span>
+            <span class="pill">WAF_v2</span>
+            <span class="pill">VMSS</span>
+            <span class="pill">Azure Firewall</span>
+            <span class="pill">Private Endpoints</span>
+          </div>
+        </div>
+        <div class="card">
+          <strong>Goal</strong>
+          <ul class="big-list">
+            <li>Automate cloud infrastructure with modular Terraform.</li>
+            <li>Deploy apps using ACR, cloud-init, and Docker Compose.</li>
+            <li>Explain traffic flow, isolation, routing, and security controls.</li>
+            <li>Show hybrid connectivity from on-prem to Azure spokes.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Azure presentation 1</span><span>Demo-ready architecture</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Complete Architecture View</h2><div class="slide-no">2 / 10</div></div>
+      <div class="image-frame">
+        <img src="d__opslora_opslora_azure-infra-architecture_presentation-1-arc-2.png" alt="Azure hub spoke architecture" />
+      </div>
+      <div class="footer"><span>Verified against Terraform implementation</span><span>Hub, spokes, WAF, VPN, Firewall, VMSS, DB private access</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Architecture Decisions</h2><div class="slide-no">3 / 10</div></div>
+      <div class="grid-3">
+        <div class="card"><strong>Hub-spoke network</strong><p>Hub centralizes shared controls: WAF/App Gateway, Firewall, Bastion, VPN Gateway, and routing boundaries.</p></div>
+        <div class="card"><strong>Regional spokes</strong><p>Opslora runs in Central India, Pronunt in East US. Each workload has its own VNet, subnet, NSG, route table, and VMSS.</p></div>
+        <div class="card"><strong>Host-based ingress</strong><p>Single public Application Gateway routes by hostname: <span class="code">opslora.com</span> and <span class="code">pronunt.com</span>.</p></div>
+        <div class="card"><strong>Private data path</strong><p>Azure SQL and Cosmos DB Mongo API are exposed through private endpoints and private DNS.</p></div>
+        <div class="card"><strong>Firewall egress</strong><p>Spoke UDRs send default and on-prem routes through Azure Firewall Standard with classic network rules.</p></div>
+        <div class="card"><strong>Automation-first</strong><p>Terraform modules build infra; cloud-init starts Docker Compose from ACR images on VMSS instances.</p></div>
+      </div>
+      <div class="footer"><span>Design tradeoff</span><span>Simple enough for presentation, close to production network patterns</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Network Topology and CIDR Plan</h2><div class="slide-no">4 / 10</div></div>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Hub VNet: Central India</strong>
+          <ul>
+            <li><span class="code">172.16.0.0/16</span></li>
+            <li>Bastion subnet: <span class="code">172.16.10.0/26</span></li>
+            <li>GatewaySubnet: <span class="code">172.16.20.0/24</span></li>
+            <li>AzureFirewallSubnet: <span class="code">172.16.30.0/26</span></li>
+            <li>ApplicationGatewaySubnet: <span class="code">172.16.40.0/26</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Spokes and on-prem</strong>
+          <ul>
+            <li>Opslora spoke: <span class="code">10.10.0.0/16</span>, app subnet <span class="code">10.10.10.0/24</span></li>
+            <li>Pronunt spoke: <span class="code">10.20.0.0/16</span>, app subnet <span class="code">10.20.10.0/24</span></li>
+            <li>Private endpoint subnets: <span class="code">10.10.20.0/24</span>, <span class="code">10.20.20.0/24</span></li>
+            <li>On-prem LAN: <span class="code">10.30.0.0/24</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <strong>Peering model</strong>
+        <p>Hub peers with both spokes. Spokes use remote gateway transit for VPN reachability, and allow forwarded traffic so Firewall/App Gateway flows can traverse the hub.</p>
+      </div>
+      <div class="footer"><span>Network segmentation</span><span>Separate control plane, application, private endpoint, and hybrid connectivity zones</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Inbound Flow: User to Application</h2><div class="slide-no">5 / 10</div></div>
+      <img class="diagram-img" src="d__opslora_opslora_azure-presentation-1_inbound-host-routing-flow.excalidraw.svg" alt="Inbound host-based routing flow" />
+      <div class="footer"><span>Inbound security</span><span>WAF policy, App Gateway NSG, app subnet NSGs, health probes</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Security Controls in the Path</h2><div class="slide-no">6 / 10</div></div>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Ingress controls</strong>
+          <ul>
+            <li>Only App Gateway has public application ingress.</li>
+            <li>WAF_v2 policy uses OWASP managed rules in prevention mode.</li>
+            <li>App Gateway subnet NSG allows Internet HTTP/HTTPS and GatewayManager ports.</li>
+            <li>Spoke app NSGs allow HTTP/HTTPS only from <span class="code">172.16.40.0/26</span>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>East-west and admin controls</strong>
+          <ul>
+            <li>Bastion subnet is the admin entry point for SSH.</li>
+            <li>On-prem source <span class="code">10.30.0.0/24</span> is explicitly allowed to spokes.</li>
+            <li>Private endpoints avoid public DB exposure.</li>
+            <li>UDRs steer spoke egress and on-prem routes through Azure Firewall.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <strong>Defense-in-depth message</strong>
+        <p>The design does not rely on one control. DNS, WAF, listeners, NSGs, route tables, Firewall rules, private endpoints, and VPN crypto policy all participate in reducing the exposed surface.</p>
+      </div>
+      <div class="footer"><span>Security narrative</span><span>Block by default, allow narrowly, keep data private</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Actual App Outbound Flow</h2><div class="slide-no">7 / 10</div></div>
+      <img class="diagram-img" src="d__opslora_opslora_azure-presentation-1_app-outbound-traffic-flow.excalidraw.svg" alt="Actual application outbound traffic flow" />
+      <div class="footer"><span>Outbound narrative</span><span>Docker-internal calls, private DB paths, Firewall egress, and on-prem routes</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Hybrid Flow: On-Prem to Azure</h2><div class="slide-no">8 / 10</div></div>
+      <div class="grid-2">
+        <img class="diagram-img" src="d__opslora_opslora_azure-presentation-1_outbound-onprem-vpn-flow.excalidraw.svg" alt="Outbound and on-prem VPN traffic flow" />
+        <div class="card">
+          <strong>VPN details</strong>
+          <ul>
+            <li>Local network gateway represents laptop public IP and <span class="code">10.30.0.0/24</span>.</li>
+            <li>Azure VPN Gateway uses AZ SKU and custom IPsec policy.</li>
+            <li>Spoke peering uses gateway transit so both spokes can be reached through hub VPN.</li>
+            <li>Firewall rules allow on-prem to app spokes for controlled ports.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Hybrid message</span><span>On-prem is treated as another routed network, not a public app path</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>High Availability and Scalability</h2><div class="slide-no">9 / 10</div></div>
+      <div class="grid-3">
+        <div class="card"><strong>Application Gateway</strong><p>WAF_v2 supports autoscale from 1 to 3 capacity units and health-probes regional backend pools.</p></div>
+        <div class="card"><strong>VMSS</strong><p>Each application runs on a Linux VM scale set with min 1 and max 3 instances. Autoscale rules react to CPU.</p></div>
+        <div class="card"><strong>Regional separation</strong><p>Pronunt runs in East US while Opslora runs in Central India, proving multi-region workload placement.</p></div>
+        <div class="card"><strong>Load balancing</strong><p>Internal Standard Load Balancers provide stable private frontend IPs for App Gateway backend pools.</p></div>
+        <div class="card"><strong>DDoS plan</strong><p>DDoS protection is attached to hub and spoke VNets as a network-level resilience control.</p></div>
+        <div class="card"><strong>Data services</strong><p>Managed SQL and Cosmos DB reduce VM-level database operations and integrate with private endpoints.</p></div>
+      </div>
+      <div class="footer"><span>Availability story</span><span>Managed ingress, scale sets, health probes, regional spokes, managed data platforms</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="title"><h2>Automation and Demo Close</h2><div class="slide-no">10 / 10</div></div>
+      <div class="grid-2">
+        <div class="card">
+          <strong>What was automated</strong>
+          <ul>
+            <li>Terraform modules for network, security, WAF, VMSS, databases, private endpoints, VPN, and routing.</li>
+            <li>ACR-backed images for both applications.</li>
+            <li>Cloud-init bootstraps Docker Compose on VMSS instances.</li>
+            <li>DNS A records map both domains to the App Gateway public IP.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Presentation talking points</strong>
+          <ul>
+            <li>Why hub-spoke simplifies governance.</li>
+            <li>How host-based routing maps one gateway to two apps.</li>
+            <li>How NSGs, UDRs, Firewall, and WAF each block a different risk.</li>
+            <li>How on-prem traffic enters privately over VPN.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <strong>Current demo endpoint</strong>
+        <p><span class="code">http://opslora.com</span> and <span class="code">http://pronunt.com</span> route to healthy frontend pools through Application Gateway.</p>
+      </div>
+      <div class="footer"><span>End</span><span>Infrastructure as a repeatable story, not a one-off deployment</span></div>
+    </section>
+  </main>
+  <div class="controls">
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+  </div>
+  <script>
+    const slides = [...document.querySelectorAll(".slide")];
+    let current = 0;
+    function show(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+    }
+    document.getElementById("prev").addEventListener("click", () => show(current - 1));
+    document.getElementById("next").addEventListener("click", () => show(current + 1));
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) show(current + 1);
+      if (["ArrowLeft", "PageUp"].includes(event.key)) show(current - 1);
+    });
+  </script>
+</body>
+</html>

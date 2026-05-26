@@ -1,0 +1,35 @@
+variable "name" {
+  type = string
+}
+
+variable "resource_group_name" {
+  type = string
+}
+
+variable "location" {
+  type = string
+}
+
+variable "routes" {
+  type = list(object({
+    name                   = string
+    address_prefix         = string
+    next_hop_type          = string
+    next_hop_in_ip_address = optional(string)
+  }))
+}
+
+variable "subnet_ids" {
+  type    = map(string)
+  default = {}
+}
+
+variable "bgp_route_propagation_enabled" {
+  type    = bool
+  default = true
+}
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}

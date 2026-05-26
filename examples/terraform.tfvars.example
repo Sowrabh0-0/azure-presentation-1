@@ -1,0 +1,43 @@
+admin_password     = "REPLACE_WITH_STRONG_VM_ADMIN_PASSWORD"
+sql_admin_password = "REPLACE_WITH_STRONG_SQL_PASSWORD"
+
+# East US checked: Standard_B2ps_v2 is available in zones 1, 2, and 3.
+pronunt_vmss_sku = "Standard_B2ps_v2"
+
+# Central India checked SKUs were subscription-restricted. Replace this after quota/SKU access is approved.
+vmss_sku = "Standard_B2s"
+
+container_registry_name = "YOUR_GLOBALLY_UNIQUE_ACR_NAME"
+
+opslora_images = {
+  auth         = "YOUR_ACR.azurecr.io/opslora-auth-service:latest"
+  customer     = "YOUR_ACR.azurecr.io/opslora-customer-service:latest"
+  inventory    = "YOUR_ACR.azurecr.io/opslora-inventory-service:latest"
+  order        = "YOUR_ACR.azurecr.io/opslora-order-service:latest"
+  invoice      = "YOUR_ACR.azurecr.io/opslora-invoice-service:latest"
+  payment      = "YOUR_ACR.azurecr.io/opslora-payment-service:latest"
+  notification = "YOUR_ACR.azurecr.io/opslora-notification-service:latest"
+  frontend     = "YOUR_ACR.azurecr.io/opslora-frontend-service:latest"
+}
+
+pronunt_images = {
+  frontend   = "YOUR_ACR.azurecr.io/pronunt-frontend-service:latest"
+  config     = "YOUR_ACR.azurecr.io/pronunt-config-service:latest"
+  aggregator = "YOUR_ACR.azurecr.io/pronunt-aggregator-service:latest"
+  worker     = "YOUR_ACR.azurecr.io/pronunt-worker-service:latest"
+  ingestion  = "YOUR_ACR.azurecr.io/pronunt-ingestion-service:latest"
+  ai         = "YOUR_ACR.azurecr.io/pronunt-ai-service:latest"
+  auth       = "YOUR_ACR.azurecr.io/pronunt-auth-service:latest"
+}
+
+opslora_jwt_secret             = "REPLACE_WITH_OPSLORA_JWT_SECRET"
+pronunt_internal_service_token = "REPLACE_WITH_PRONUNT_INTERNAL_TOKEN"
+pronunt_session_jwt_secret     = "REPLACE_WITH_PRONUNT_SESSION_SECRET"
+openai_api_key                 = "REPLACE_WITH_OPENAI_API_KEY"
+github_oauth_client_id         = "REPLACE_WITH_GITHUB_CLIENT_ID"
+github_oauth_client_secret     = "REPLACE_WITH_GITHUB_CLIENT_SECRET"
+
+# Enable after the on-prem Ubuntu VPN endpoint is ready.
+enable_vpn_gateway        = false
+onprem_gateway_public_ip  = ""
+vpn_shared_key            = ""
